@@ -336,6 +336,11 @@ class Admin {
                 if ($this->dbh->query($query)) {
                     $count_saved++;
                 }
+                $query = "insert into user_preferences(idUser, idModule,shorcut,qLaunch)
+    SELECT idUser,idModules,1,1 FROM user_groups ug, groups_modules gm where gm.idGroups=ug.idGroup and idModules not in (SELECT idModule FROM user_preferences);
+                        ";
+                 $this->query = $this->dbh->prepare($query); 
+                 $this->dbh->query($query);
             } else {
                 $adminGroup = TRUE;
             }
